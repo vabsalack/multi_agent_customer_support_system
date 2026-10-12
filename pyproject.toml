@@ -1,0 +1,71 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "multi_agent_customer_support_system"
+version = "0.0.1"
+description = "a customer ticket support system with multi agent capability"
+authors = [
+  { name = "kittu" },
+]
+
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    
+]
+dependencies = [
+    "pip",
+    "python-dotenv",
+]
+requires-python = "~=3.14.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["multi_agent_customer_support_system"]
+include = ["pyproject.toml", "multi_agent_customer_support_system/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["multi_agent_customer_support_system"]
+force-sort-within-sections = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "uv"
+major_version_zero = true
+[dependency-groups]
+dev = [
+    "commitizen>=4.19.2",
+    "marimo[lsp]>=0.25.1",
+    "pylsp-mypy>=0.8.2",
+    "ruff>=0.17.0",
+]
+
+# Ruff formatting on save
+[tool.marimo.save]
+format_on_save = true
+
+# pylsp for completions + Ruff linting
+[tool.marimo.language_servers.pylsp]
+enabled = true
+enable_ruff = true        # Ruff linting via pylsp
+enable_mypy = true        # use mypy since ty and pylsp ruff lsp's conflict issue
+enable_flake8 = false
+enable_pydocstyle = false
+enable_pylint = false
+enable_pyflakes = false
+
+# explicitly disable ty for type checking diagnostics
+[tool.marimo.language_servers.ty]
+enabled = false
+
+[tool.marimo.diagnostics]
+enabled = true               # Show diagnostics in the editor
+
